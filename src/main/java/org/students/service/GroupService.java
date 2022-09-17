@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class GroupService {
-	private GroupRepository groupRepository;
+	private final GroupRepository groupRepository;
 
 	@Autowired
 	public GroupService(GroupRepository groupRepository) {
@@ -18,5 +18,12 @@ public class GroupService {
 
 	public List<Group> getGroups() {
 		return groupRepository.findAll();
+	}
+
+	public void addGroup(Group group) {
+		boolean exists = groupRepository.existsById(group.getId());
+		if (!exists) {
+			groupRepository.save(group);
+		}
 	}
 }

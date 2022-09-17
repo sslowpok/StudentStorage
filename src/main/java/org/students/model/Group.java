@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +25,7 @@ public class Group {
 	)
 	private Long id;
 	private String name;
+
 
 	public Group(String name) {
 		this.name = name;

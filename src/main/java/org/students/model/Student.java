@@ -3,9 +3,10 @@ package org.students.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-// TODO: поменять на sequence
 
 @NoArgsConstructor
 @Data
@@ -28,9 +29,6 @@ public class Student {
 	private Integer age;
 	private Long groupId;
 
-//	@ElementCollection
-//	private List<Long> disciplines;
-
 	public Student(String firstName, String lastName, Integer age, Long groupId) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -38,6 +36,10 @@ public class Student {
 		this.groupId = groupId;
 	}
 
-
-
+	public Student(String firstName, String lastName, Integer age) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.groupId = null;
+	}
 }

@@ -4,10 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @Entity
+//@Embeddable
 @Table(name = "discipline")
 public class Discipline {
 	@Id
