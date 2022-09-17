@@ -36,10 +36,11 @@ public class Student {
 		this.groupId = groupId;
 	}
 
-	public Student(String firstName, String lastName, Integer age) {
+	public Student(Long id, String firstName, String lastName, Integer age, Long groupId) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
-		this.groupId = null;
+		this.groupId = groupId;
 	}
 }

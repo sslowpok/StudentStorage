@@ -31,14 +31,13 @@ public class StorageController {
 
 	@GetMapping(path = "students")
 	public List<Student> getStudents(
-			@RequestParam(required = false) Integer sortBy
-			// 0 - default, 1 - surname, 2 - name, 3 - age
+			@RequestParam(required = false) String searchBy,
+			@RequestParam(required = false) String searchByParameter,
+			@RequestParam(required = false) String sortBy
 			) {
-		if (sortBy == null) {
-			return studentService.getStudents();
-		} else {
-			return studentService.getStudents(sortBy);
-		}
+
+		return studentService.getStudents(searchBy, searchByParameter, sortBy);
+
 	}
 
 	@GetMapping(path = "groups")
