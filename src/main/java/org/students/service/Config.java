@@ -20,40 +20,41 @@ public class Config {
 			Group group2 = new Group("Group2");
 			Group group3 = new Group("Group3");
 
-			groupRepository.save(group1);
-			groupRepository.save(group2);
-			groupRepository.save(group3);
+
 
 			Student wade = new Student(
 					"Wade",
 					"Allen",
-					25,
-					1L
+					25
 			);
 			Student dave = new Student(
 					"Dave",
 					"Lopez",
-					31,
-					1L
+					31
 
 			);
 			Student riley = new Student(
 					"Riley",
 					"Long",
-					17,
-					2L
+					17
 			);
+
+			wade.setGroup(group1);
+
+			groupRepository.save(group1);
+			groupRepository.save(group2);
+			groupRepository.save(group3);
 			studentRepository.save(wade);
 			studentRepository.save(dave);
 			studentRepository.save(riley);
 
-			Discipline maths = new Discipline("Maths");
-			Discipline biology = new Discipline("Biology");
-			Discipline chemistry = new Discipline("Chemistry");
-
-			disciplineRepository.save(maths);
-			disciplineRepository.save(biology);
-			disciplineRepository.save(chemistry);
+//			Discipline maths = new Discipline("Maths");
+//			Discipline biology = new Discipline("Biology");
+//			Discipline chemistry = new Discipline("Chemistry");
+//
+//			disciplineRepository.save(maths);
+//			disciplineRepository.save(biology);
+//			disciplineRepository.save(chemistry);
 
 		};
 	}

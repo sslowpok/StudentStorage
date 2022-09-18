@@ -36,9 +36,10 @@ public class StudentService {
 
 	}
 
-	public void addStudent(Student student) {
+	public void addStudent(Student student, Long gro) {
 		boolean exists = repository.existsById(student.getId());
 		if (!exists) {
+			student.setGroup();
 			repository.save(student);
 			isUpdated = true;
 		} else {

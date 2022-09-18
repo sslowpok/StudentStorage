@@ -9,7 +9,8 @@ import java.util.Set;
 
 
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "student")
 public class Student {
@@ -27,20 +28,15 @@ public class Student {
 	private String firstName;
 	private String lastName;
 	private Integer age;
-	private Long groupId;
+//	private Long groupId;
 
-	public Student(String firstName, String lastName, Integer age, Long groupId) {
+	@ManyToOne
+	@JoinColumn(name = "ID_OF_GROUP")
+	private Group group;
+
+	public Student(String firstName, String lastName, Integer age) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
-		this.groupId = groupId;
-	}
-
-	public Student(Long id, String firstName, String lastName, Integer age, Long groupId) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
-		this.groupId = groupId;
 	}
 }

@@ -56,8 +56,9 @@ public class StorageController {
 	}
 
 	@PostMapping(path = "students/new")
-	public void addStudent(@RequestBody Student student) {
-		studentService.addStudent(student);
+	public void addStudent(@RequestBody Student student,
+						   @RequestParam Long groupId) {
+		studentService.addStudent(student, groupId);
 	}
 
 	@PostMapping(path = "groups/new")
@@ -80,10 +81,10 @@ public class StorageController {
 		return studentService.getStudentById(id);
 	}
 
-	@GetMapping(path = "students/{groupId}")
-	public List<Student> getStudentsByGroupId(@PathVariable("groupId") Long groupId) {
-		return studentService.getStudentsByGroupId(groupId);
-	}
+//	@GetMapping(path = "students/{groupId}")
+//	public List<Student> getStudentsByGroupId(@PathVariable("groupId") Long groupId) {
+//		return studentService.getStudentsByGroupId(groupId);
+//	}
 
 	@GetMapping("grades/{studentId}")
 	public List<Grade> getStudentGrades(@PathVariable("studentId") Long studentId) {

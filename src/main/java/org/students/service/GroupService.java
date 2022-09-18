@@ -3,6 +3,7 @@ package org.students.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.students.model.Group;
+import org.students.model.Student;
 
 import java.util.List;
 
@@ -26,4 +27,8 @@ public class GroupService {
 			groupRepository.save(group);
 		}
 	}
+
+//	public void setStudentToGroup(Student student) {
+//		groupRepository.getReferenceBy
+//	}
 }
