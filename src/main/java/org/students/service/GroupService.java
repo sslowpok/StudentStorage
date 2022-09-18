@@ -1,7 +1,9 @@
 package org.students.service;
 
+import liquibase.pro.packaged.P;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.students.exceptions.GroupNotFoundException;
 import org.students.model.Group;
 import org.students.model.Student;
 
@@ -25,6 +27,14 @@ public class GroupService {
 		boolean exists = groupRepository.existsById(group.getId());
 		if (!exists) {
 			groupRepository.save(group);
+		}
+	}
+
+	public Group findById(Long groupId) {
+		if (groupRepository.existsById(groupId)) {
+			return groupRepository.findGroupById(groupId);
+		} else {
+			throw new GroupNotFoundException("Group with id " + groupId + " not found");
 		}
 	}
 

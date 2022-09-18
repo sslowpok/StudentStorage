@@ -1,5 +1,6 @@
 package org.students.model;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,8 +31,9 @@ public class Student {
 	private Integer age;
 //	private Long groupId;
 
+	@Hidden
 	@ManyToOne
-	@JoinColumn(name = "ID_OF_GROUP")
+	@JoinColumn(name = "group_id")
 	private Group group;
 
 	public Student(String firstName, String lastName, Integer age) {

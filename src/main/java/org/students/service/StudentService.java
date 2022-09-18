@@ -36,10 +36,10 @@ public class StudentService {
 
 	}
 
-	public void addStudent(Student student, Long gro) {
+	public void addStudent(Student student, Long groupId) {
 		boolean exists = repository.existsById(student.getId());
 		if (!exists) {
-			student.setGroup();
+//			student.setGroup();
 			repository.save(student);
 			isUpdated = true;
 		} else {
@@ -47,9 +47,9 @@ public class StudentService {
 		}
 	}
 
-	public List<Student> getStudentsByGroupId(Long groupId) {
-		return repository.getStudentsByGroupId(groupId);
-	}
+//	public List<Student> getStudentsByGroupId(Long groupId) {
+//		return repository.getStudentsByGroupId(groupId);
+//	}
 
 	public Student getStudentById(Long id) {
 		return repository.findById(id)

@@ -37,43 +37,15 @@ public class StorageController {
 			) {
 
 		return studentService.getStudents(searchBy, searchByParameter, sortBy);
-
-	}
-
-	@GetMapping(path = "groups")
-	public List<Group> getGroups() {
-		return groupService.getGroups();
-	}
-
-	@GetMapping(path = "disciplines")
-	public List<Discipline> getDisciplines() {
-		return disciplineService.getDisciplines();
-	}
-
-	@GetMapping(path = "grades")
-	public List<Grade> getGrades() {
-		return gradeService.getGrades();
 	}
 
 	@PostMapping(path = "students/new")
 	public void addStudent(@RequestBody Student student,
-						   @RequestParam Long groupId) {
+						   @RequestParam(required = false) Long groupId) {
+		if (groupId != null) {
+			student.setGroup(groupService.findById(groupId));
+		}
 		studentService.addStudent(student, groupId);
-	}
-
-	@PostMapping(path = "groups/new")
-	public void addGroup(@RequestBody Group group) {
-		groupService.addGroup(group);
-	}
-
-	@PostMapping(path = "disciplines/new")
-	public void addDiscipline(@RequestBody Discipline discipline) {
-		disciplineService.addDiscipline(discipline);
-	}
-
-	@PostMapping(path = "grades/new")
-	public void addGrade(@RequestBody Grade grade) {
-		gradeService.addGrade(grade);
 	}
 
 	@GetMapping(path = "students/{id}")
@@ -81,14 +53,46 @@ public class StorageController {
 		return studentService.getStudentById(id);
 	}
 
-//	@GetMapping(path = "students/{groupId}")
-//	public List<Student> getStudentsByGroupId(@PathVariable("groupId") Long groupId) {
-//		return studentService.getStudentsByGroupId(groupId);
-//	}
+	@GetMapping(path = "groups")
+	public List<Group> getGroups() {
+		return groupService.getGroups();
+	}
+
+	@PostMapping(path = "groups/new")
+	public void addGroup(@RequestBody Group group) {
+		groupService.addGroup(group);
+	}
+
+	@GetMapping(path = "grades")
+	public List<Grade> getGrades() {
+		return gradeService.getGrades();
+	}
+
+	@PostMapping(path = "grades/new")
+	public void addGrade(@RequestBody Grade grade) {
+		gradeService.addGrade(grade);
+	}
 
 	@GetMapping("grades/{studentId}")
 	public List<Grade> getStudentGrades(@PathVariable("studentId") Long studentId) {
 		return gradeService.getStudentGrades(studentId);
 	}
+
+	@GetMapping(path = "disciplines")
+	public List<Discipline> getDisciplines() {
+		return disciplineService.getDisciplines();
+	}
+
+	@PostMapping(path = "disciplines/new")
+	public void addDiscipline(@RequestBody Discipline discipline) {
+		disciplineService.addDiscipline(discipline);
+	}
+
+
+//	@GetMapping(path = "students/{groupId}")
+//	public List<Student> getStudentsByGroupId(@PathVariable("groupId") Long groupId) {
+//		return studentService.getStudentsByGroupId(groupId);
+//	}
+
 
 }
