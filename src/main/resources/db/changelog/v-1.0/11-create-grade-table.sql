@@ -1,5 +1,5 @@
 create table grade (
-    id int8 not null,
+    id bigint,
     description varchar(255),
     grade int4,
     primary key (id)

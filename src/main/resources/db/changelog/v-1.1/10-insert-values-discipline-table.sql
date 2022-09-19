@@ -1,10 +1,10 @@
-insert into discipline(id, name) values(1, 'Discipline1')
+insert into discipline(id, name) values(nextval('discipline_sequence'), 'Discipline1')
 GO
-insert into discipline(id, name) values(2, 'Discipline2')
+insert into discipline(id, name) values(nextval('discipline_sequence'), 'Discipline2')
 GO
-insert into discipline(id, name) values(3, 'Discipline3')
+insert into discipline(id, name) values(nextval('discipline_sequence'), 'Discipline3')
 GO
-insert into discipline(id, name) values(4, 'Discipline4')
+insert into discipline(id, name) values(nextval('discipline_sequence'), 'Discipline4')
 GO
-insert into discipline(id, name) values(5, 'Discipline5')
+insert into discipline(id, name) values(nextval('discipline_sequence'), 'Discipline5')
 GO

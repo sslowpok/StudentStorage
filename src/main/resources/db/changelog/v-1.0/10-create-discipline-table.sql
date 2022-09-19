@@ -1,5 +1,5 @@
 create table discipline (
-    id int8 not null,
+    id bigint,
     name varchar(255),
     primary key (id)
 )

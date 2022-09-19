@@ -1,8 +1,8 @@
-insert into student(id, age, first_name, last_name) values(1, 25, 'Wade', 'Allen')
+insert into student(id, age, first_name, last_name) values(nextval('student_sequence'), 25, 'Wade', 'Allen')
 GO
-insert into student(id, age, first_name, last_name) values(2, 31, 'Dave', 'Lopez')
+insert into student(id, age, first_name, last_name) values(nextval('student_sequence'), 31, 'Dave', 'Lopez')
 GO
-insert into student(id, age, first_name, last_name) values(3, 17, 'Riley', 'Long')
+insert into student(id, age, first_name, last_name) values(nextval('student_sequence'), 17, 'Riley', 'Long')
 GO
-insert into student(id, age, first_name, last_name) values(4, 31, 'David', 'Jones')
+insert into student(id, age, first_name, last_name) values(nextval('student_sequence'), 31, 'David', 'Jones')
 GO

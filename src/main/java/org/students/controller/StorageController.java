@@ -25,8 +25,6 @@ public class StorageController {
 	private final DisciplineService disciplineService;
 	private final GradeService gradeService;
 
-	private Map<Long, List<Student>> groupStudentMap = new HashMap<>();
-
 	@Autowired
 	public StorageController(StudentService studentService, GroupService groupService, DisciplineService disciplineService, GradeService gradeService) {
 		this.studentService = studentService;
@@ -48,16 +46,9 @@ public class StorageController {
 
 	@Operation(summary = "Add new student")
 	@PostMapping(path = "students/new")
-	public void addStudent(@RequestBody Student student,
-						   @RequestParam(required = false) Long groupId) {
-
-//		TODO: handle invalid groupId
-
-		studentService.addStudent(student, groupId);
-		if (groupStudentMap.containsKey(groupId)) {
-			groupStudentMap.get(groupId).add(student);
-		}
-
+	public void addStudent(@RequestBody Student student) {
+		System.out.println("ID IS " + student.getId());
+		studentService.addStudent(student);
 	}
 
 	@Operation(summary = "Get student by id")
@@ -66,14 +57,13 @@ public class StorageController {
 		return studentService.getStudentById(id);
 	}
 
-	@Operation(summary = "Get students by group id (does not work)")
-	@GetMapping(path = "groups/{groupId}")
+	@Operation(summary = "Get students by group id")
+	@GetMapping(path = "students/group-id/{groupId}")
 	public List<Student> getStudentByGroupId(@PathVariable("groupId") Long groupId) {
-		System.out.println(groupStudentMap.get(groupId));
-		return groupStudentMap.get(groupId);
+		return studentService.getStudentsByGroupId(groupId);
 	}
 
-	@Operation(summary = "get list of groups")
+	@Operation(summary = "Get list of groups")
 	@GetMapping(path = "groups")
 	public List<Group> getGroups() {
 		return groupService.getGroups();
@@ -83,7 +73,6 @@ public class StorageController {
 	@PostMapping(path = "groups/new")
 	public void addGroup(@RequestBody Group group) {
 		groupService.addGroup(group);
-		groupStudentMap.put(group.getId(), new ArrayList<>());
 	}
 
 	@Operation(summary = "Get list of grades")

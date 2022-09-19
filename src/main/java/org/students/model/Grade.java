@@ -1,6 +1,5 @@
 package org.students.model;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.*;
 import org.students.exceptions.IllegalGradeException;
 
@@ -15,17 +14,31 @@ import java.util.Objects;
 @Table(name = "grade")
 public class Grade {
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(
+			name = "grade_sequence",
+			sequenceName = "grade_sequence",
+			allocationSize = 1
+	)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "grade_sequence"
+	)
 	private Long id;
 	private Integer grade;
 	private String description;
-
-
-//	private Long studentId;
+	private Long studentId;
+	private Long disciplineId;
 
 	public Grade(Integer grade, String description) {
 		setGrade(grade);
 		this.description = description;
+	}
+
+	public Grade(Integer grade, String description, Long studentId, Long disciplineId) {
+		this.grade = grade;
+		this.description = description;
+		this.studentId = studentId;
+		this.disciplineId = disciplineId;
 	}
 
 	public void setGrade(Integer grade) {
@@ -40,11 +53,11 @@ public class Grade {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Grade grade1 = (Grade) o;
-		return Objects.equals(id, grade1.id) && Objects.equals(grade, grade1.grade) && Objects.equals(description, grade1.description);
+		return Objects.equals(id, grade1.id) && Objects.equals(grade, grade1.grade) && Objects.equals(description, grade1.description) && Objects.equals(studentId, grade1.studentId) && Objects.equals(disciplineId, grade1.disciplineId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, grade, description);
+		return Objects.hash(id, grade, description, studentId, disciplineId);
 	}
 }

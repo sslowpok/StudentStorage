@@ -1,16 +1,13 @@
 package org.students.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.students.exceptions.IllegalFilterException;
 import org.students.exceptions.StudentNotFoundException;
-import org.students.model.Grade;
 import org.students.model.Student;
 
-import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,31 +27,33 @@ public class StudentService {
 			cachedStudentList = repository.findAll();
 			isUpdated = false;
 		}
-		// available params - name, surname, age
-
 		return sorter(searcher(searchBy, searchByParameter), sortBy);
-
 	}
 
-	public void addStudent(Student student, Long groupId) {
-		boolean exists = repository.existsById(student.getId());
-		if (!exists) {
-//			student.setGroup();
-			repository.save(student);
-			isUpdated = true;
-		} else {
-			throw new IllegalStateException("Student already exists");
+	public void addStudent(Student student) {
+		Optional<Student> optionalStudent = repository.findById(student.getId());
+		if (optionalStudent.isPresent()) {
+			throw new IllegalStateException(
+					"Student with id " + student.getId() + " already exists");
 		}
+		repository.save(student);
+//		if (!repository.existsById(student.getId())) {
+//			repository.save(student);
+//			isUpdated = true;
+//		} else {
+//			throw new IllegalStateException(
+//					"Student with id " + student.getId() + " already exists");
+//		}
 	}
-
-//	public List<Student> getStudentsByGroupId(Long groupId) {
-//		return repository.getStudentsByGroupId(groupId);
-//	}
 
 	public Student getStudentById(Long id) {
 		return repository.findById(id)
 				.orElseThrow(() -> new StudentNotFoundException(
 						"Student with id " + id + " not found"));
+	}
+
+	public List<Student> getStudentsByGroupId(Long groupId) {
+		return repository.findAllByGroupId(groupId);
 	}
 
 	private List<Student> searcher(String searchBy, String parameter) {
@@ -94,4 +93,6 @@ public class StudentService {
 		}
 		return afterSearch;
 	}
+
+
 }

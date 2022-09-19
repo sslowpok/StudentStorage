@@ -21,9 +21,6 @@ public class GradeService {
 		return gradeRepository.findAll();
 	}
 
-//	check if exists is unnecessary here
-//	what is student passed here?
-	@Transactional
 	public void addGrade(Grade grade) {
 		boolean exists = gradeRepository.existsById(grade.getId());
 		if (!exists) {
