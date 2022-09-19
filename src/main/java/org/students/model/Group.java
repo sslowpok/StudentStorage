@@ -1,17 +1,16 @@
 package org.students.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @Entity
 @Table(name = "academic_group")
@@ -29,10 +28,21 @@ public class Group {
 	private Long id;
 	private String name;
 
-	@OneToMany(mappedBy = "group")
-	private Set<Student> students;
 
 	public Group(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Group group = (Group) o;
+		return Objects.equals(id, group.id) && Objects.equals(name, group.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name);
 	}
 }

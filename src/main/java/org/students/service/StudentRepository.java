@@ -10,8 +10,4 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-//	@Query("SELECT a FROM Student a WHERE a.id=?")
-	List<Student> getStudentsByGroupId(Long groupId);
-
-	List<Student> getStudentByGroupId(Long groupId);
 }

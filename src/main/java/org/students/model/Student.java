@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -31,14 +32,24 @@ public class Student {
 	private Integer age;
 //	private Long groupId;
 
-	@Hidden
-	@ManyToOne
-	@JoinColumn(name = "group_id")
-	private Group group;
+
 
 	public Student(String firstName, String lastName, Integer age) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Student student = (Student) o;
+		return Objects.equals(id, student.id) && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(age, student.age);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, firstName, lastName, age);
 	}
 }

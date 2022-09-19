@@ -31,7 +31,4 @@ public class GradeService {
 		}
 	}
 
-	public List<Grade> getStudentGrades(Long studentId) {
-		return gradeRepository.findAllByStudentId(studentId);
-	}
 }
