@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "api/v1/storage")
@@ -99,5 +100,50 @@ public class StorageController {
 		disciplineService.addDiscipline(discipline);
 	}
 
+	@Operation(summary = "Get grade statistics")
+	@GetMapping(path = "grades/statistics")
+	public void getStatistics() {
+//		return gradeService.getStatistics();
+		statMaker();
+	}
+
+	private void statMaker() {
+		Map<String, Double> AverageDiscipline = new HashMap<>();
+
+
+		// List of discipline names
+		List<String> disciplines = new ArrayList<>();
+
+		Map<String, List<Grade>> disciplineGradeMap = new HashMap<>();
+
+
+//		// Adding discipline names to discipline list from discipline service
+//		disciplineService.getDisciplines()
+//				.forEach(discipline -> disciplines.add(discipline.getName()));
+
+
+		List<Grade> listOfGrades = new ArrayList<>();
+
+		// Adding discipline names and list of grades for them
+		List<Discipline> disciplineList = disciplineService.getDisciplines();
+		disciplineList.forEach(discipline -> {
+			disciplineGradeMap.put(
+					discipline.getName(),
+					gradeService.getDisciplineGrades(discipline.getId()));
+		});
+
+
+
+
+
+		for(Map.Entry<String, List<Grade>> entry : disciplineGradeMap.entrySet()) {
+			System.out.println(entry);
+		}
+
+//		System.out.println(disciplineGradeMap);
+
+
+
+	}
 
 }
