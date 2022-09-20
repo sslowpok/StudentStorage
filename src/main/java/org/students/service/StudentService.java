@@ -82,9 +82,11 @@ public class StudentService {
 				return afterSearch.stream()
 						.sorted(Comparator.comparing(Student::getAge))
 						.collect(Collectors.toList());
+			} else {
+				throw new IllegalStateException("Invalid parameter");
 			}
 		}
 		return afterSearch;
 	}
-	
+
 }
