@@ -16,7 +16,6 @@ public class GroupService {
 		this.groupRepository = groupRepository;
 	}
 
-
 	public List<Group> getGroups() {
 		return groupRepository.findAll();
 	}
@@ -25,14 +24,6 @@ public class GroupService {
 		boolean exists = groupRepository.existsById(group.getId());
 		if (!exists) {
 			groupRepository.save(group);
-		}
-	}
-
-	public Group findById(Long groupId) {
-		if (groupRepository.existsById(groupId)) {
-			return groupRepository.findGroupById(groupId);
-		} else {
-			throw new GroupNotFoundException("Group with id " + groupId + " not found");
 		}
 	}
 }

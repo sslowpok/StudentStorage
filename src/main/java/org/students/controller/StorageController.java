@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping(path = "api/v1/storage")
@@ -39,16 +39,13 @@ public class StorageController {
 	public List<Student> getStudents(
 			@RequestParam(required = false) String searchBy,
 			@RequestParam(required = false) String searchByParameter,
-			@RequestParam(required = false) String sortBy
-			) {
-
+			@RequestParam(required = false) String sortBy) {
 		return studentService.getStudents(searchBy, searchByParameter, sortBy);
 	}
 
 	@Operation(summary = "Add new student")
 	@PostMapping(path = "students/new")
 	public void addStudent(@RequestBody Student student) {
-		System.out.println("ID IS " + student.getId());
 		studentService.addStudent(student);
 	}
 
@@ -102,48 +99,28 @@ public class StorageController {
 
 	@Operation(summary = "Get grade statistics")
 	@GetMapping(path = "grades/statistics")
-	public void getStatistics() {
-//		return gradeService.getStatistics();
-		statMaker();
+	public Map<String, Map<String, Double>> getStatistics() {
+		Map<String, Map<String, Double>> statMap = new HashMap<>();
+		statMap.put("Average for disciplines", statMaker());
+		return statMap;
 	}
 
-	private void statMaker() {
-		Map<String, Double> AverageDiscipline = new HashMap<>();
-
-
-		// List of discipline names
-		List<String> disciplines = new ArrayList<>();
-
-		Map<String, List<Grade>> disciplineGradeMap = new HashMap<>();
-
-
-//		// Adding discipline names to discipline list from discipline service
-//		disciplineService.getDisciplines()
-//				.forEach(discipline -> disciplines.add(discipline.getName()));
-
+	private Map<String, Double> statMaker() {
+		Map<String, Double> disciplineGradeMap = new HashMap<>();
 
 		List<Grade> listOfGrades = new ArrayList<>();
+		List<Discipline> listOfDisciplines = disciplineService.getDisciplines();
 
-		// Adding discipline names and list of grades for them
-		List<Discipline> disciplineList = disciplineService.getDisciplines();
-		disciplineList.forEach(discipline -> {
-			disciplineGradeMap.put(
-					discipline.getName(),
-					gradeService.getDisciplineGrades(discipline.getId()));
+		listOfDisciplines.forEach(discipline -> {
+			listOfGrades.addAll(gradeService.getDisciplineGrades(discipline.getId()));
+			int summ = listOfGrades.stream()
+					.flatMapToInt(grade -> IntStream.of(grade.getGrade()))
+					.reduce(0, Integer::sum);
+			double average = listOfGrades.size() == 0 ? 0D : (double)summ / listOfGrades.size();
+			disciplineGradeMap.put(discipline.getName(), average);
+			listOfGrades.clear();
 		});
-
-
-
-
-
-		for(Map.Entry<String, List<Grade>> entry : disciplineGradeMap.entrySet()) {
-			System.out.println(entry);
-		}
-
-//		System.out.println(disciplineGradeMap);
-
-
-
+		return disciplineGradeMap;
 	}
 
 }

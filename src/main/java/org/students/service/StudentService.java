@@ -37,13 +37,6 @@ public class StudentService {
 					"Student with id " + student.getId() + " already exists");
 		}
 		repository.save(student);
-//		if (!repository.existsById(student.getId())) {
-//			repository.save(student);
-//			isUpdated = true;
-//		} else {
-//			throw new IllegalStateException(
-//					"Student with id " + student.getId() + " already exists");
-//		}
 	}
 
 	public Student getStudentById(Long id) {
@@ -93,6 +86,5 @@ public class StudentService {
 		}
 		return afterSearch;
 	}
-
-
+	
 }

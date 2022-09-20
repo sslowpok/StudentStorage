@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfig {
-
 	@Bean
 	public OpenAPI openAPIConfig() {
 		return new OpenAPI().info(apiInfo());
@@ -21,5 +20,4 @@ public class OpenApiConfig {
 				.version("v1.0");
 		return info;
 	}
-
 }
