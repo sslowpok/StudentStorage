@@ -3,6 +3,7 @@ package org.students.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.students.exceptions.GroupNotFoundException;
 import org.students.model.Discipline;
 import org.students.model.Grade;
 import org.students.model.Group;
@@ -46,7 +47,13 @@ public class StorageController {
 	@Operation(summary = "Add new student")
 	@PostMapping(path = "students/new")
 	public void addStudent(@RequestBody Student student) {
-		studentService.addStudent(student);
+		if (groupService.existsById(student.getGroupId())) {
+			studentService.addStudent(student);
+		} else {
+			throw new GroupNotFoundException(
+					"Group with id " + student.getGroupId() + " does not exist"
+			);
+		}
 	}
 
 	@Operation(summary = "Get student by id")
@@ -61,6 +68,12 @@ public class StorageController {
 		return studentService.getStudentsByGroupId(groupId);
 	}
 
+	@Operation(summary = "Delete student by id")
+	@DeleteMapping(path = "students/{id}")
+	public void deleteStudentById(@PathVariable("id") Long id) {
+		studentService.deleteStudentById(id);
+	}
+
 	@Operation(summary = "Get list of groups")
 	@GetMapping(path = "groups")
 	public List<Group> getGroups() {
@@ -71,6 +84,12 @@ public class StorageController {
 	@PostMapping(path = "groups/new")
 	public void addGroup(@RequestBody Group group) {
 		groupService.addGroup(group);
+	}
+
+	@Operation(summary = "Delete group by id")
+	@DeleteMapping(path = "groups/{id}")
+	public void deleteGroupById(@PathVariable("id") Long id) {
+		groupService.deleteGroupById(id);
 	}
 
 	@Operation(summary = "Get list of grades")
@@ -85,6 +104,12 @@ public class StorageController {
 		gradeService.addGrade(grade);
 	}
 
+	@Operation(summary = "Delete grade by id")
+	@DeleteMapping(path = "grades/{id}")
+	public void deleteGradeById(@PathVariable("id") Long id) {
+		gradeService.deleteGradeById(id);
+	}
+
 	@Operation(summary = "Get list of disciplines")
 	@GetMapping(path = "disciplines")
 	public List<Discipline> getDisciplines() {
@@ -95,6 +120,12 @@ public class StorageController {
 	@PostMapping(path = "disciplines/new")
 	public void addDiscipline(@RequestBody Discipline discipline) {
 		disciplineService.addDiscipline(discipline);
+	}
+
+	@Operation(summary = "Delete discipline by id")
+	@DeleteMapping(path = "disciplines/{id}")
+	public void deleteDisciplineById(@PathVariable("id") Long id) {
+		disciplineService.deleteDisciplineById(id);
 	}
 
 	@Operation(summary = "Get grade statistics")

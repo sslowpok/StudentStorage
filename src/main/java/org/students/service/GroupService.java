@@ -26,4 +26,18 @@ public class GroupService {
 			groupRepository.save(group);
 		}
 	}
+
+	public boolean existsById(Long groupId) {
+		return groupRepository.existsById(groupId);
+	}
+
+	public void deleteGroupById(Long id) {
+		boolean exists = groupRepository.existsById(id);
+		if (!exists) {
+			throw new GroupNotFoundException(
+					"Group with id " + id + " does not exist"
+			);
+		}
+		groupRepository.deleteById(id);
+	}
 }

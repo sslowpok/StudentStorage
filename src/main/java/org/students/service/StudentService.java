@@ -89,4 +89,13 @@ public class StudentService {
 		return afterSearch;
 	}
 
+	public void deleteStudentById(Long id) {
+		boolean exists = repository.existsById(id);
+		if (!exists) {
+			throw new StudentNotFoundException(
+					"Student with id " + id + " does not exist"
+			);
+		}
+ 		repository.deleteById(id);
+	}
 }

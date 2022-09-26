@@ -14,13 +14,13 @@ import java.util.Objects;
 public class Group {
 	@Id
 	@SequenceGenerator(
-			name = "group_sequence",
-			sequenceName = "group_sequence",
+			name = "academic_group_sequence",
+			sequenceName = "academic_group_sequence",
 			allocationSize = 1
 	)
 	@GeneratedValue(
 			strategy = GenerationType.SEQUENCE,
-			generator = "group_sequence"
+			generator = "academic_group_sequence"
 	)
 	private Long id;
 	private String name;

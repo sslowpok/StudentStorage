@@ -2,6 +2,7 @@ package org.students.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.students.exceptions.GradeNotFoundException;
 import org.students.model.Grade;
 import org.students.model.Student;
 
@@ -44,5 +45,15 @@ public class GradeService {
 
 	public List<Grade> getDisciplineGrades(Long disciplineId) {
 		return gradeRepository.findAllByDisciplineId(disciplineId);
+	}
+
+	public void deleteGradeById(Long id) {
+		boolean exists = gradeRepository.existsById(id);
+		if (!exists) {
+			throw new GradeNotFoundException(
+					"Grade with id " + id + " does not exist"
+			);
+		}
+		gradeRepository.deleteById(id);
 	}
 }
