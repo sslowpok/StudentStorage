@@ -13,10 +13,7 @@ import org.students.service.GradeService;
 import org.students.service.GroupService;
 import org.students.service.StudentService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @RestController
@@ -128,15 +125,24 @@ public class StorageController {
 		disciplineService.deleteDisciplineById(id);
 	}
 
+
+	/*
+		TODO:
+		 Наименьшая и наивысшая оценка по каждой из дисциплин
+		 Количество каждой полученной оценки (5 - 4 штуки, 4 - 3 штуки и тд)
+		 Лучшая серия максимально полученных оценок (3,5,4,4,4,4,5,5,3 - лучшая серия две оценки 5 подряд)
+	 */
+
 	@Operation(summary = "Get grade statistics")
 	@GetMapping(path = "grades/statistics")
 	public Map<String, Map<String, Double>> getStatistics() {
 		Map<String, Map<String, Double>> statMap = new HashMap<>();
-		statMap.put("Average for disciplines", statMaker());
+		statMap.put("Average for disciplines", AverageForDisciplines());
+//		statMap.put("Max and min for disciplines", MaxMinForDiscipline());
 		return statMap;
 	}
 
-	private Map<String, Double> statMaker() {
+	private Map<String, Double> AverageForDisciplines() {
 		Map<String, Double> disciplineGradeMap = new HashMap<>();
 
 		List<Grade> listOfGrades = new ArrayList<>();
@@ -144,14 +150,32 @@ public class StorageController {
 
 		listOfDisciplines.forEach(discipline -> {
 			listOfGrades.addAll(gradeService.getDisciplineGrades(discipline.getId()));
-			int summ = listOfGrades.stream()
+			int sum = listOfGrades.stream()
 					.flatMapToInt(grade -> IntStream.of(grade.getGrade()))
 					.reduce(0, Integer::sum);
-			double average = listOfGrades.size() == 0 ? 0D : (double)summ / listOfGrades.size();
+			double average = listOfGrades.size() == 0 ? 0D : (double)sum / listOfGrades.size();
 			disciplineGradeMap.put(discipline.getName(), average);
 			listOfGrades.clear();
 		});
 		return disciplineGradeMap;
+	}
+
+	private Map<String, Map<String, Integer>> MaxMinForDiscipline() {
+		Map<String, Map<String, Integer>> map = new HashMap<>();
+
+		List<Discipline> listOfDisciplines = disciplineService.getDisciplines();
+		List<Grade> gradeList = gradeService.getGrades();
+
+		listOfDisciplines.forEach(discipline -> {
+
+			int max = gradeList.stream()
+					.filter(grade -> Objects.equals(grade.getDisciplineId(), discipline.getId()))
+					.max(Comparator.comparing(Grade::getGrade)).get().getGrade();
+
+			map.put(discipline.getName(), Map.of("Max", max));
+
+		});
+		return map;
 	}
 
 }
