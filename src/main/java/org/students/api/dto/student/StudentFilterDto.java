@@ -1,4 +1,4 @@
-package org.students.api.dto;
+package org.students.api.dto.student;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +14,9 @@ public class StudentFilterDto {
 
     @Parameter(description = "Search field")
     private String search;
+
+    @Parameter(description = "Exact search match")
+    private boolean exact;
 
     @Parameter(description = "Sort field")
     private String sort;
