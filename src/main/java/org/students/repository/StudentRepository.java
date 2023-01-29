@@ -8,6 +8,4 @@ import org.students.model.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpecificationExecutor<Student> {
 
-
-
 }

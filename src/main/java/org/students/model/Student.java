@@ -29,6 +29,4 @@ public class Student {
     @JoinColumn(name = "group_id", referencedColumnName = "id")
     private StudentGroup group;
 
-    @Schema(name = "Is student deleted")
-    private boolean isDeleted;
 }

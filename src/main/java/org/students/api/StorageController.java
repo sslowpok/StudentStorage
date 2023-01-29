@@ -3,6 +3,7 @@ package org.students.api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.students.api.dto.student.PageStudentDto;
 import org.students.api.dto.student.StudentFilterDto;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequestMapping("${server.basePrefixUrl}")
 public class StorageController {
 
-    private StudentService studentService;
+    private final StudentService studentService;
 
     @Operation(summary = "Get page of students")
     @GetMapping("/students")
