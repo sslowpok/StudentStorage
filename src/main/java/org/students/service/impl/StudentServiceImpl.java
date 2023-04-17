@@ -42,6 +42,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	@Transactional
 	public StudentResponse updateStudent(StudentUpdateRequest request) {
 		Student requestEntity = studentMapper.putRequestToEntity(request);
 		Student entity = studentRepository.findById(request.getId())

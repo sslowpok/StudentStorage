@@ -1,5 +1,6 @@
 package org.students.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.hibernate.annotations.Where;
 
@@ -7,8 +8,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Where(clause = "deleted=false")
 @Table(name = "student")
+@Where(clause = "deleted=false")
 public class Student {
 
     @Id
@@ -26,8 +27,9 @@ public class Student {
 ////    @ToString.Exclude
 //    private List<StudentGrade> grades;
 //
-//    @ManyToOne(optional = false)
-//    @JoinColumn(name = "group_id", referencedColumnName = "id")
-//    private StudentGroup group;
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    private StudentGroup group;
 
 }

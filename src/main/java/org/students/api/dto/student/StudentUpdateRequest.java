@@ -17,6 +17,4 @@ public class StudentUpdateRequest {
 	@Schema(description = "Last name", example = "Brown")
 	private String lastName;
 
-	@Schema(description = "Deleted", example = "false")
-	private boolean deleted;
 }

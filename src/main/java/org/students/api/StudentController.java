@@ -25,21 +25,25 @@ public class StudentController {
 	}
 
 	@GetMapping("{id}")
+	@Operation(summary = "Get student by id")
 	public StudentResponse getStudentById(@PathVariable Long id) {
 		return studentService.getStudentById(id);
 	}
 
 	@PostMapping
+	@Operation(summary = "Add student")
 	public StudentResponse addStudent(StudentAddRequest student) {
 		return studentService.addStudent(student);
 	}
 
 	@PutMapping
+	@Operation(summary = "Update student")
 	public StudentResponse updateStudent(StudentUpdateRequest request) {
 		return studentService.updateStudent(request);
 	}
 
 	@DeleteMapping("{id}")
+	@Operation(summary = "Delete student by id")
 	public void deleteStudent(@PathVariable Long id) {
 		studentService.deleteStudent(id);
 	}
