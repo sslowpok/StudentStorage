@@ -1,15 +1,21 @@
 package org.students.service;
 
-import org.students.api.dto.student.PageStudentDto;
-import org.students.api.dto.student.StudentFilterDto;
-import org.students.model.Student;
+import org.students.api.dto.student.StudentAddRequest;
+import org.students.api.dto.student.StudentResponse;
+import org.students.api.dto.student.StudentUpdateRequest;
 
 import java.util.List;
 
 public interface StudentService {
-    PageStudentDto getStudents(StudentFilterDto studentFilterDto);
 
-    void addStudent(Student student);
+	List<StudentResponse> getStudents();
 
-    Student getStudentById(Long id);
+	StudentResponse getStudentById(Long id);
+
+	StudentResponse addStudent(StudentAddRequest request);
+
+	StudentResponse updateStudent(StudentUpdateRequest request);
+
+	void deleteStudent(Long id);
+
 }
